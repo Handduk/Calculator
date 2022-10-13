@@ -32,7 +32,9 @@ namespace Calculator
                 switch (menu)
                 {
                     case "1":
-                        Console.WriteLine("Case 1");
+                        Console.Clear();
+                        Console.WriteLine("Ange ett tal: ");
+                        string tal = Console.ReadLine();
                         break;
 
                         case "2":
