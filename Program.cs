@@ -37,6 +37,7 @@ namespace Calculator
                         Console.Clear();
                         Console.WriteLine("Ange ett tal: ");
                         string tal = Console.ReadLine();
+                        
                         if (tal.Contains("+"))
                         {
                             int plus = tal.IndexOf("+");         //Hitta plus
@@ -49,10 +50,12 @@ namespace Calculator
                             float plusSumNum = tal1 + tal2;
 
                             string plusSum = plusSumNum.ToString(); //Konvertera int till string
+                            
+
                             results.Add($"{plus1Text} + {plus2Text} = {plusSum}"); //Lägger till i listan
                             //Utskrift
                             Console.WriteLine($"{tal1} + {tal2} = {plusSum}");
-                            Console.ReadKey();
+                            
                         }
                         else if (tal.Contains("-"))
                         {
@@ -104,6 +107,20 @@ namespace Calculator
                             //Utskrift
                             Console.WriteLine($"{tal1} / {tal2} = {divSum}");
                             Console.ReadKey();
+                            
+                        }
+
+                        Console.Write("Would you like to see previous results? y/n: ");
+
+                        string resultAnswer = Console.ReadLine().ToLower();
+
+                        if (resultAnswer == "y")
+                        {
+                            goto case "2";
+                        }
+                        else if (resultAnswer != "y" || resultAnswer != "n")
+                        {
+                            Console.WriteLine("invalid input");
                             
                         }
 
