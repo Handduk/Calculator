@@ -51,7 +51,6 @@ namespace Calculator
 
                             string plusSum = plusSumNum.ToString(); //Konvertera int till string
                             
-
                             results.Add($"{plus1Text} + {plus2Text} = {plusSum}"); //Lägger till i listan
                             //Utskrift
                             Console.WriteLine($"{tal1} + {tal2} = {plusSum}");
@@ -69,10 +68,11 @@ namespace Calculator
                             float minusSumNum = tal1 - tal2;
 
                             string minusSum = minusSumNum.ToString(); //Konvertera int till string
+
                             results.Add($"{minus1Text} - {minus2Text} = {minusSum}"); //Lägger till i listan
                             //Utskrift
                             Console.WriteLine($"{tal1} - {tal2} = {minusSum}");
-                            Console.ReadKey();
+                            
                         }
                         else if (tal.Contains("*"))
                         {
@@ -86,10 +86,11 @@ namespace Calculator
                             float multSumNum = tal1 * tal2;
 
                             string multSum = multSumNum.ToString(); //Konvertera int till string
+
                             results.Add($"{mult1Text} * {mult2Text} = {multSum}"); //Lägger till i listan
                             //Utskrift
                             Console.WriteLine($"{tal1} * {tal2} = {multSum}");
-                            Console.ReadKey();
+                           
                         }
                         else if (tal.Contains("/"))
                         {
@@ -103,14 +104,15 @@ namespace Calculator
                             float divSumNum = tal1 / tal2;
 
                             string divSum = divSumNum.ToString(); //Konvertera int till string
+
                             results.Add($"{div1Text} / {div2Text} = {divSum}"); //Lägger till i listan
                             //Utskrift
                             Console.WriteLine($"{tal1} / {tal2} = {divSum}");
-                            Console.ReadKey();
+                            
                             
                         }
 
-                        Console.Write("Would you like to see previous results? y/n: ");
+                        Console.Write("Would you like to see previous results? 'y', continue? 'n', or go back to the menu 'enter': ");
 
                         string resultAnswer = Console.ReadLine().ToLower();
 
@@ -118,29 +120,45 @@ namespace Calculator
                         {
                             goto case "2";
                         }
-                        else if (resultAnswer != "y" || resultAnswer != "n")
+                        else if (resultAnswer == "n")
                         {
-                            Console.WriteLine("invalid input");
+                            goto case "1";
                             
                         }
-
+                        Console.Clear();
                         break;
 
                         case "2":
                         Console.Clear();
-                        Console.WriteLine("Tidigare resultat\n");
+                        Console.WriteLine("Previous results\n");
                         if (results.Count == 0)
-                            Console.WriteLine("No results yet.");
+                        {
+                            Console.WriteLine("No results yet.\n");
+                            Console.WriteLine("Press enter to go back to menu: ");
+                            Console.ReadKey();
+                        }
+                            
                         else
                         {
                             foreach (string t in results) 
                             {
                                 Console.WriteLine(t);
                             }
+                            Console.WriteLine("\nDo you want to continue or exit the program?");
+                            Console.Write("'y' for continue or 'n' for exit, 'enter' for menu: ");
+                            string case2Result = Console.ReadLine().ToLower();
+
+                            if (case2Result == "y")
+                            {
+                                goto case "1";
+                            }
+                            else if (case2Result == "n")
+                            {
+                                goto case "3";
+                            }
                             
                         }
-                        Console.WriteLine("Press enter to go back to menu: ");
-                        Console.ReadKey();
+                        
                         Console.Clear();
 
                         break;
