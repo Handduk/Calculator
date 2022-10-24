@@ -49,20 +49,11 @@ namespace Calculator
                             }
                             else
                             {
-                                int plus = tal.IndexOf("+");         //Hitta plus
-                                string plus1Text = tal[..plus];          //hitta tal innan plus
-                                string plus2Text = tal[(plus + 1)..];    //Hitta tal efter plus
-                                float tal1 = float.Parse(plus1Text);
-                                float tal2 = float.Parse(plus2Text);
+                                string plusRes = PlusCalc(tal);
 
-                                //Uträkning
-                                float plusSumNum = tal1 + tal2;
-
-                                string plusSum = plusSumNum.ToString(); //Konvertera int till string
-
-                                results.Add($"{plus1Text} + {plus2Text} = {plusSum}"); //Lägger till i listan
-                                                                                       //Utskrift
-                                Console.WriteLine($"{tal1} + {tal2} = {plusSum}");
+                                results.Add($"{tal} = {plusRes}");            //Lägger till i listan
+                                                                                       
+                                Console.WriteLine($"{tal} = {plusRes}");      //Utskrift
                             }
                            
                             
@@ -78,20 +69,11 @@ namespace Calculator
                             }
                             else
                             {
-                                int minus = tal.IndexOf("-");         //Hitta minus
-                                string minus1Text = tal[..minus];          //hitta tal innan minus
-                                string minus2Text = tal[(minus + 1)..];    //Hitta tal efter minus
-                                float tal1 = float.Parse(minus1Text);
-                                float tal2 = float.Parse(minus2Text);
+                                string subRes = SubCalc(tal);
 
-                                //Uträkning
-                                float minusSumNum = tal1 - tal2;
-
-                                string minusSum = minusSumNum.ToString(); //Konvertera int till string
-
-                                results.Add($"{minus1Text} - {minus2Text} = {minusSum}"); //Lägger till i listan
-                                                                                          //Utskrift
-                                Console.WriteLine($"{tal1} - {tal2} = {minusSum}");
+                                results.Add($"{tal} = {subRes}");             //Lägger till i listan
+                                                                                          
+                                Console.WriteLine($"{tal} = {subRes}");       //Utskrift
                             }
                             
                             
@@ -107,20 +89,11 @@ namespace Calculator
                             }
                             else
                             {
-                                int multiply = tal.IndexOf("*");         //Hitta asterix
-                                string mult1Text = tal[..multiply];          //hitta tal innan asterix
-                                string mult2Text = tal[(multiply + 1)..];    //Hitta tal efter asterix
-                                float tal1 = float.Parse(mult1Text);
-                                float tal2 = float.Parse(mult2Text);
+                                string multiRes = MultiCalc(tal);
 
-                                //Uträkning
-                                float multSumNum = tal1 * tal2;
-
-                                string multSum = multSumNum.ToString(); //Konvertera int till string
-
-                                results.Add($"{mult1Text} * {mult2Text} = {multSum}"); //Lägger till i listan
-                                                                                       //Utskrift
-                                Console.WriteLine($"{tal1} * {tal2} = {multSum}");
+                                results.Add($"{tal} = {multiRes}");             //Lägger till i listan
+                                                                                       
+                                Console.WriteLine($"{tal} = {multiRes}");       //Utskrift
                             }
                                 
                            
@@ -136,20 +109,11 @@ namespace Calculator
                             }
                             else
                             {
-                                int divide = tal.IndexOf("/");         //Hitta snedsträck
-                                string div1Text = tal[..divide];          //hitta tal innan snedsträck
-                                string div2Text = tal[(divide + 1)..];    //Hitta tal efter snedsträck
-                                float tal1 = float.Parse(div1Text);
-                                float tal2 = float.Parse(div2Text);
+                                string divRes = DivCalc(tal);
 
-                                //Uträkning
-                                float divSumNum = tal1 / tal2;
-
-                                string divSum = divSumNum.ToString(); //Konvertera int till string
-
-                                results.Add($"{div1Text} / {div2Text} = {divSum}"); //Lägger till i listan
-                                                                                    //Utskrift
-                                Console.WriteLine($"{tal1} / {tal2} = {divSum}");
+                                results.Add($"{tal} = {divRes}");               //Lägger till i listan
+                                                                                    
+                                Console.WriteLine($"{tal} = {divRes}");         //Utskrift
                             }    
                         }
 
@@ -219,8 +183,78 @@ namespace Calculator
             
             }
 
+            string PlusCalc(string tal)
+            {
+                int plus = tal.IndexOf("+");            //Hitta plus
+                string plus1Text = tal[..plus];          //hitta tal innan plus
+                string plus2Text = tal[(plus + 1)..];    //Hitta tal efter plus
+                float tal1 = float.Parse(plus1Text);
+                float tal2 = float.Parse(plus2Text);
 
-            
+                //Uträkning
+                float plusSumNum = tal1 + tal2;
+
+                string plusSum = plusSumNum.ToString(); //Konvertera int till string
+
+                
+
+                return plusSum;
+            }
+
+            string SubCalc(string tal)
+            {
+                int minus = tal.IndexOf("-");            //Hitta minus
+                string minus1Text = tal[..minus];          //hitta tal innan minus
+                string minus2Text = tal[(minus + 1)..];    //Hitta tal efter minus
+                float tal1 = float.Parse(minus1Text);
+                float tal2 = float.Parse(minus2Text);
+
+                //Uträkning
+                float minusSumNum = tal1 - tal2;
+
+                string subSum = minusSumNum.ToString(); //Konvertera int till string
+
+
+
+                return subSum;
+            }
+
+            string MultiCalc(string tal)
+            {
+                int multiply = tal.IndexOf("*");         //Hitta asterix
+                string mult1Text = tal[..multiply];          //hitta tal innan asterix
+                string mult2Text = tal[(multiply + 1)..];    //Hitta tal efter asterix
+                float tal1 = float.Parse(mult1Text);
+                float tal2 = float.Parse(mult2Text);
+
+                //Uträkning
+                float multSumNum = tal1 * tal2;
+
+                string multiSum = multSumNum.ToString(); //Konvertera int till string
+
+
+
+                return multiSum;
+            }
+
+            string DivCalc(string tal)
+            {
+                int divide = tal.IndexOf("/");            //Hitta snedsträck
+                string div1Text = tal[..divide];          //hitta tal innan snedsträck
+                string div2Text = tal[(divide + 1)..];    //Hitta tal efter snedsträck
+                float tal1 = float.Parse(div1Text);
+                float tal2 = float.Parse(div2Text);
+
+                //Uträkning
+                float divSumNum = tal1 / tal2;
+
+                string divSum = divSumNum.ToString();     //Konvertera int till string
+
+
+
+                return divSum;
+            }
+
 
         }
 
