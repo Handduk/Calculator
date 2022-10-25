@@ -1,7 +1,4 @@
-﻿
-//OBS! Användaren måsta mata in ett tal för att kunna ta sig vidare i programmet!
-
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Calculator
 {
@@ -13,15 +10,11 @@ namespace Calculator
             List<string> results = new List<string>();              //Initierar lista 'results'
 
             //Välkomst meddelande
-            Console.WriteLine("\t ***Martins Calculator**\n");
-            Console.WriteLine("Make an option?\n");
-      
+            WelcomeMessage();
             while (choice)
             {
                 //Meny
-                Console.WriteLine("Calculator: 1");
-                Console.WriteLine("Previous results: 2");
-                Console.WriteLine("Exit: 3");
+                MenuScreen();
 
                 string menu = Console.ReadLine();
                 switch (menu)
@@ -34,7 +27,7 @@ namespace Calculator
                         if (Regex.IsMatch(tal, @"[a-zA-Z]"))
                         {
                             Console.WriteLine("Calculation must not contain any letters. Press any key to try again");
-                            Console.ReadLine();
+                            Console.ReadKey();
                             goto case "1";
                         }
 
@@ -45,7 +38,7 @@ namespace Calculator
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0+0");
                                 Console.WriteLine("Press any key to try again");
-                                Console.ReadLine();
+                                Console.ReadKey();
                                 goto case "1";                              //Går tillbaka till case 1
                             }
                             else
@@ -66,7 +59,7 @@ namespace Calculator
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0-0");
                                 Console.WriteLine("Press any key to try again");
-                                Console.ReadLine();
+                                Console.ReadKey();
                                 goto case "1";
                             }
                             else
@@ -87,7 +80,7 @@ namespace Calculator
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0*0");
                                 Console.WriteLine("Press any key to try again");
-                                Console.ReadLine();
+                                Console.ReadKey();
                                 goto case "1";
                             }
                             else
@@ -108,7 +101,7 @@ namespace Calculator
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0/0");
                                 Console.WriteLine("Press any key to try again");
-                                Console.ReadLine();
+                                Console.ReadKey();
                                 goto case "1";
                             }
                             else
@@ -145,7 +138,7 @@ namespace Calculator
                         {
                             Console.WriteLine("No results yet.\n");
                             Console.WriteLine("Press any key to go back to menu: ");
-                            Console.ReadLine();
+                            Console.ReadKey();
                         }
                             
                         else
@@ -155,7 +148,7 @@ namespace Calculator
                                 Console.WriteLine(t);                           //Skriver ut listan med uträkningar
                             }
                             Console.WriteLine("\nDo you want to continue or exit the program?");
-                            Console.Write("'y' for continue or 'n' for exit or any other key for menu: ");
+                            Console.Write("'y' for continue, 'n' for exit or any other key for menu: ");
                             string case2Result = Console.ReadLine().ToLower();
 
                             if (case2Result == "y")
@@ -174,13 +167,14 @@ namespace Calculator
                         break;
 
                     case "3":
-                        Console.WriteLine("Program exit");
+                        ExitMessage();                                        //Kallar på metoden ExitMessage
+                        
                         choice = false;
                         break;
 
                         default:                                              //Om input är annat än 1,2 eller 3
-                        Console.WriteLine("Invalid input. Press enter to continue: ");
-                        Console.ReadLine();
+                        Console.WriteLine("Invalid input. Press any key to return: ");
+                        Console.ReadKey();
                         Console.Clear();
                         break;
 
@@ -251,7 +245,44 @@ namespace Calculator
 
                 return divSum;                              //Returnera string variabeln divSum som innehåller summan av uträkningen
             }
+            //Välkomstmeddelande
+            void WelcomeMessage()
+            {
+                string welcome = "\t ***Martins Calculator***\n\t      Make an option\n\n";
 
+                for (int i = 0; i < welcome.Length; i++)                      //initierar en loop som loopar så många tecken stringen welcome innehåller
+                {
+                    Thread.Sleep(50);                                         //Skriver ut en bokstav var 50 millisekund
+                    Console.Write(welcome[i]);                              
+                }
+            }
+            //SKriver ut meny
+            void MenuScreen()
+            {
+                string menu = "Calculator: 1\nPrevious results: 2\nExit: 3\n";
+                for (var i = 0; i < menu.Length; i++)
+                {
+                    Thread.Sleep(30);
+                    Console.Write(menu[i]);
+                }
+            }
+            //Meddelande när program avslutas
+            void ExitMessage()
+            {
+                Console.Clear();
+                string exitMessage = "Program exit";
+                for (int i = 0; i < exitMessage.Length; i++)
+                {
+                    Thread.Sleep(50);
+                    Console.Write(exitMessage[i]);
+                }
+                string dots = ". . .  ";
+                for (int i = 0; i < dots.Length; i++)
+                {
+                    Thread.Sleep(200);
+                    Console.Write(dots[i]);
+                }
+            }
 
         }
 
