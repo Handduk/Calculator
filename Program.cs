@@ -7,55 +7,59 @@ namespace Calculator
         static void Main(string[] args)
         {
             bool choice = true;
-            List<string> results = new List<string>();              //Initierar lista 'results'
+            //Initierar lista 'results'
+            List<string> results = new List<string>();
 
-            //Välkomst meddelande
+            //Välkomstmeddelande
             WelcomeMessage();
             while (choice)
             {
                 //Meny
                 MenuScreen();
 
-                string menu = Console.ReadLine();
+                string? menu = Console.ReadLine();
                 switch (menu)
                 {
                     case "1":
                         Console.Clear();
                         Console.WriteLine("Type a calculation, for example (25,7+74,3): ");
-                        string tal = Console.ReadLine();
-
-                        if (Regex.IsMatch(tal, @"[a-zA-Z]"))
+                        string? input = Console.ReadLine();
+                        //Kontrollerar om input innehåller några bokstäver
+                        if (Regex.IsMatch(input, @"[a-zA-Z]"))
                         {
                             Console.WriteLine("Calculation must not contain any letters. Press any key to try again");
                             Console.ReadKey();
                             goto case "1";
                         }
-
-                        if (tal.Contains("+"))                                 //Kontrollerar om input innehåller '+' tecken
+                        //Kontrollerar om input innehåller '+' tecken
+                        if (input.Contains("+"))
                         {
                             //Ger felmeddelande om talet är '0+0'
-                            if (tal.Contains("0+0"))
+                            if (input.Contains("0+0"))
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0+0");
                                 Console.WriteLine("Press any key to try again");
                                 Console.ReadKey();
-                                goto case "1";                              //Går tillbaka till case 1
+                                //Går tillbaka till case 1
+                                goto case "1";
                             }
                             else
                             {
-                                string plusRes = PlusCalc(tal);               //Kallar på uträkningsmetoden för addition
-
-                                results.Add($"{tal} = {plusRes}");            //Lägger till i listan
-                                                                                       
-                                Console.WriteLine($"{tal} = {plusRes}");      //Utskrift
+                                //Kallar på uträkningsmetoden för addition
+                                string plusRes = PlusCalc(input);
+                                //Lägger till i listan
+                                results.Add($"{input} = {plusRes}");
+                                //Utskrift                                                       
+                                Console.WriteLine($"{input} = {plusRes}");
                             }
-                           
-                            
+
+
                         }
-                        else if (tal.Contains("-"))                         //Kontrollerar om input innehåller '-' tecken
+
+                        else if (input.Contains("-"))
                         {
-                            //Ger felmeddelande om talet är '0-0'
-                            if (tal.Contains("0-0"))
+
+                            if (input.Contains("0-0"))
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0-0");
                                 Console.WriteLine("Press any key to try again");
@@ -64,19 +68,19 @@ namespace Calculator
                             }
                             else
                             {
-                                string subRes = SubCalc(tal);                 //Kallar på uträkningsmetoden för subtraktion
+                                string subRes = SubCalc(input);
 
-                                results.Add($"{tal} = {subRes}");             //Lägger till i listan
-                                                                                          
-                                Console.WriteLine($"{tal} = {subRes}");       //Utskrift
+                                results.Add($"{input} = {subRes}");
+
+                                Console.WriteLine($"{input} = {subRes}");
                             }
-                            
-                            
+
+
                         }
-                        else if (tal.Contains("*"))
+                        else if (input.Contains("*"))
                         {
-                            //Ger felmeddelande om talet är '0*0'
-                            if (tal.Contains("0*0"))
+
+                            if (input.Contains("0*0"))
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0*0");
                                 Console.WriteLine("Press any key to try again");
@@ -85,19 +89,19 @@ namespace Calculator
                             }
                             else
                             {
-                                string multiRes = MultiCalc(tal);               //Kallar på uträkningsmetoden för multiplikation
+                                string multiRes = MultiCalc(input);
 
-                                results.Add($"{tal} = {multiRes}");             //Lägger till i listan
-                                                                                       
-                                Console.WriteLine($"{tal} = {multiRes}");       //Utskrift
+                                results.Add($"{input} = {multiRes}");
+
+                                Console.WriteLine($"{input} = {multiRes}");
                             }
-                                
-                           
+
+
                         }
-                        else if (tal.Contains("/"))
+                        else if (input.Contains("/"))
                         {
-                            //Ger felmeddelande om talet är '0/0'
-                            if (tal.Contains("0/0"))
+
+                            if (input.Contains("0/0"))
                             {
                                 Console.WriteLine("invalid input. Calculation must not contain 0/0");
                                 Console.WriteLine("Press any key to try again");
@@ -106,50 +110,56 @@ namespace Calculator
                             }
                             else
                             {
-                                string divRes = DivCalc(tal);                   //Kallar på uträkningsmetoden för division
+                                string divRes = DivCalc(input);
 
-                                results.Add($"{tal} = {divRes}");               //Lägger till i listan
-                                                                                    
-                                Console.WriteLine($"{tal} = {divRes}");         //Utskrift
-                            }    
+                                results.Add($"{input} = {divRes}");
+
+                                Console.WriteLine($"{input} = {divRes}");
+                            }
                         }
 
                         Console.Write("Would you like to see previous results? 'y', continue? 'n' or any key for menu: ");
 
-                        string resultAnswer = Console.ReadLine().ToLower();     //Konverterar input till små bokstäver
+                        //Konverterar input till små bokstäver
+                        string? resultAnswer = Console.ReadLine().ToLower();
 
                         if (resultAnswer == "y")
                         {
-                            goto case "2";                                      //Går till case 2, tidigare resultat
+                            //Går till case 2, tidigare resultat
+                            goto case "2";
                         }
                         else if (resultAnswer == "n")
                         {
-                            goto case "1";                                      //Går till case 1, uträkning
-                            
+                            //Går till case 1, uträkning
+                            goto case "1";
+
                         }
-                        
+
                         Console.Clear();
                         break;
 
                     case "2":
-                        Console.Clear();                                        //Rensar konsolfältet
+                        //Rensar konsolfältet
+                        Console.Clear();
                         Console.WriteLine("Previous results\n");
-                        if (results.Count == 0)                                 //Om inga tidigare uträkningar har gjorts så visas meddelandet "No results yet"
+                        //Om inga tidigare uträkningar har gjorts så visas meddelandet "No results yet"
+                        if (results.Count == 0)
                         {
                             Console.WriteLine("No results yet.\n");
                             Console.WriteLine("Press any key to go back to menu: ");
                             Console.ReadKey();
                         }
-                            
+
                         else
                         {
-                            foreach (string t in results) 
+                            foreach (string t in results)
                             {
-                                Console.WriteLine(t);                           //Skriver ut listan med uträkningar
+                                //Skriver ut listan med uträkningar
+                                Console.WriteLine(t);
                             }
                             Console.WriteLine("\nDo you want to continue or exit the program?");
                             Console.Write("'y' for continue, 'n' for exit or any other key for menu: ");
-                            string case2Result = Console.ReadLine().ToLower();
+                            string? case2Result = Console.ReadLine().ToLower();
 
                             if (case2Result == "y")
                             {
@@ -159,107 +169,117 @@ namespace Calculator
                             {
                                 goto case "3";
                             }
-                            
+
                         }
-                        
+
                         Console.Clear();
 
                         break;
 
                     case "3":
-                        ExitMessage();                                        //Kallar på metoden ExitMessage
-                        
+                        //Kallar på metoden ExitMessage
+                        ExitMessage();
+
                         choice = false;
                         break;
 
-                        default:                                              //Om input är annat än 1,2 eller 3
+                    //Om input är annat än 1,2 eller 3
+                    default:
                         Console.WriteLine("Invalid input. Press any key to return: ");
                         Console.ReadKey();
                         Console.Clear();
                         break;
-
                 }
-            
             }
 
             //METODER
 
+            //rader som inte är kommenterade är förklarat på tidigare metoder
+
             //räkna ut addition
             string PlusCalc(string tal)
             {
-                int plus = tal.IndexOf("+");             //Hitta plus från användarens input
-                string plus1Text = tal[..plus];          //hitta tal innan plus
-                
-                string plus2Text = tal[(plus + 1)..];    //Hitta tal efter plus
-                float tal1 = float.Parse(plus1Text);     //Konvertera första talet från string till float
-                float tal2 = float.Parse(plus2Text);     //Konvertera andra talet från string till float
+                //Hitta plus från användarens input
+                int plus = tal.IndexOf("+");
+                //hitta tal innan plus
+                string plus1Text = tal[..plus];
 
-                float plusSumNum = tal1 + tal2;         //Uträkning
-
-                string plusSum = plusSumNum.ToString(); //Konvertera float till string
-
-                return plusSum;                         //Returnera string variabeln plusSum som innehåller summan av uträkningen
+                //Hitta tal efter plus
+                string plus2Text = tal[(plus + 1)..];
+                //Konvertera första talet från string till float
+                float tal1 = float.Parse(plus1Text);
+                //Konvertera andra talet från string till float
+                float tal2 = float.Parse(plus2Text);
+                //Uträkning
+                float plusSumNum = tal1 + tal2;
+                //Konvertera float till string
+                string plusSum = plusSumNum.ToString();
+                //Returnera string variabeln plusSum som innehåller summan av uträkningen
+                return plusSum;
             }
             //Räkna ut subtration
             string SubCalc(string tal)
             {
-                int minus = tal.IndexOf("-");              //Hitta minus från användarens input
-                string minus1Text = tal[..minus];          //hitta tal innan minus
-                string minus2Text = tal[(minus + 1)..];    //Hitta tal efter minus
-                float tal1 = float.Parse(minus1Text);      //konvertera första talet från string till float
-                float tal2 = float.Parse(minus2Text);      //konvertera andra talet från string till float
+                int minus = tal.IndexOf("-");
+                string minus1Text = tal[..minus];
+                string minus2Text = tal[(minus + 1)..];
+                float tal1 = float.Parse(minus1Text);
+                float tal2 = float.Parse(minus2Text);
 
-                float minusSumNum = tal1 - tal2;           //Uträkning
+                float minusSumNum = tal1 - tal2;
 
-                string subSum = minusSumNum.ToString();    //Konvertera float till string
+                string subSum = minusSumNum.ToString();
 
-                return subSum;                             //Returnera string variabeln subSum som innehåller summan av uträkningen
+                return subSum;
             }
             //Räkna ut multiplikation
             string MultiCalc(string tal)
             {
-                int multiply = tal.IndexOf("*");            //Hitta asterix från användarens input
-                string mult1Text = tal[..multiply];         //hitta tal innan asterix
-                string mult2Text = tal[(multiply + 1)..];   //Hitta tal efter asterix
-                float tal1 = float.Parse(mult1Text);        //Konvertera första talet från string till float
-                float tal2 = float.Parse(mult2Text);        //Konvertera andra talet från string till float
+                int multiply = tal.IndexOf("*");
+                string mult1Text = tal[..multiply];
+                string mult2Text = tal[(multiply + 1)..];
+                float tal1 = float.Parse(mult1Text);
+                float tal2 = float.Parse(mult2Text);
 
-                float multSumNum = tal1 * tal2;             //Uträkning
+                float multSumNum = tal1 * tal2;
 
-                string multiSum = multSumNum.ToString();    //Konvertera float till string
+                string multiSum = multSumNum.ToString();
 
-                return multiSum;                            //Returnera string vartiabeln subSum som innehåller summan av uträkningen
+                return multiSum;
             }
             //Räkna ut division
             string DivCalc(string tal)
             {
-                int divide = tal.IndexOf("/");              //Hitta snedsträck från användarens input
-                string div1Text = tal[..divide];            //hitta tal innan snedsträck
-                string div2Text = tal[(divide + 1)..];      //Hitta tal efter snedsträck
-                float tal1 = float.Parse(div1Text);         //Konvertera första talet från string till float
-                float tal2 = float.Parse(div2Text);         //Konvertera andra talet från string till float
+                int divide = tal.IndexOf("/");
+                string div1Text = tal[..divide];
+                string div2Text = tal[(divide + 1)..];
+                float tal1 = float.Parse(div1Text);
+                float tal2 = float.Parse(div2Text);
 
-                float divSumNum = tal1 / tal2;              //Uträkning
+                float divSumNum = tal1 / tal2;
 
-                string divSum = divSumNum.ToString();       //Konvertera float till string
+                string divSum = divSumNum.ToString();
 
-                return divSum;                              //Returnera string variabeln divSum som innehåller summan av uträkningen
+                return divSum;
             }
             //Välkomstmeddelande
             void WelcomeMessage()
             {
                 string welcome = "\t ***Martins Calculator***\n\t      Make an option\n\n";
 
-                for (int i = 0; i < welcome.Length; i++)                      //initierar en loop som loopar så många tecken stringen welcome innehåller
+                //initierar en loop som loopar så många tecken stringen welcome innehåller
+                for (int i = 0; i < welcome.Length; i++)
                 {
-                    Thread.Sleep(50);                                         //Skriver ut en bokstav var 50 millisekund
-                    Console.Write(welcome[i]);                              
+                    //Skriver ut en bokstav var 50 millisekund
+                    Thread.Sleep(50);
+                    Console.Write(welcome[i]);
                 }
             }
             //SKriver ut meny
             void MenuScreen()
             {
                 string menu = "Calculator: 1\nPrevious results: 2\nExit: 3\n";
+
                 for (var i = 0; i < menu.Length; i++)
                 {
                     Thread.Sleep(30);
@@ -283,9 +303,6 @@ namespace Calculator
                     Console.Write(dots[i]);
                 }
             }
-
         }
-
-    
     }
 }
