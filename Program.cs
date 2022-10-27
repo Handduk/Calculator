@@ -22,15 +22,15 @@ namespace Calculator
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("Type a calculation, for example (25,7+74,3): ");
+                        Console.WriteLine("Type a calculation without any spaces, for example (25,7+74,3): ");
                         string? input = Console.ReadLine();
-                        //Kontrollerar om input innehåller några bokstäver
-                        if (Regex.IsMatch(input, @"[a-zA-Z]"))
+
+                        //Kontrollerar om input innehåller några fel, tex specialtecken, mellanslag eller bokstäver)
+                        if (Errors(input) == "error")
                         {
-                            Console.WriteLine("Calculation must not contain any letters. Press any key to try again");
-                            Console.ReadKey();
                             goto case "1";
                         }
+                        
                         //Kontrollerar om input innehåller '+' tecken
                         if (input.Contains("+"))
                         {
@@ -302,6 +302,45 @@ namespace Calculator
                     Thread.Sleep(200);
                     Console.Write(dots[i]);
                 }
+            }
+            //Felmeddelanden
+            string Errors(string input)
+            {
+                //Kontrollerar om input innehåller bokstäver
+                if (Regex.IsMatch(input, @"[a-zA-Z]"))
+                {
+                    Console.WriteLine("Calculation must not contain any letters. Press any key to try again");
+                    Console.ReadKey();
+                    
+                }
+                //Kontrollerar om input innehåller mellanslag
+                if (input.Contains(" "))
+                {
+                    Console.WriteLine("No spaces allowed. Press any key to try again");
+                    Console.ReadKey();
+                    
+                }
+                //Kontrollerar om input är tomt
+                if (input == "")
+                {
+                    Console.WriteLine("No input. Press any key to try again");
+                    Console.ReadKey();
+                    
+                }
+                //Kontrollerar om input innehåller specialtecken
+                string symbols = "!\"#¤%&/()=?`^'@£$€{[]}\\<>|-_^~§½";
+                //För varje tecken i stringen symbols kollar loopen om input innehåller någon av alla tecken
+                foreach(var item in symbols)
+                {
+                    if (input.Contains(item))
+                    {
+                        Console.WriteLine("Input cannot contain special characters. Press any key to try again");
+                        Console.ReadKey();
+                    }
+
+                }
+                //Returnerar felmeddelande
+                return "error";
             }
         }
     }
