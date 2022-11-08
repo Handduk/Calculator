@@ -22,88 +22,52 @@ namespace Calculator
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("Type a calculation without any spaces, for example (25,7+74,3): ");
+                        Console.WriteLine("Type a calculation without any spaces, for example (25,7+74,3) type 0 for menu: ");
                         string? input = Console.ReadLine();
-
+                        if (input == "0")
+                        {
+                            Console.Clear();
+                            break;
+                        }
                         //Kontrollerar om input innehåller några fel, tex specialtecken, mellanslag eller bokstäver)
                         if (Errors(input) == "error")
                         {
                             goto case "1";
                         }
-                        
                         //Kontrollerar om input innehåller '+' tecken
                         if (input.Contains("+"))
                         {
-                            //Ger felmeddelande om talet är '0+0'
-                            if (input.Contains("0+0"))
-                            {
-                                Console.WriteLine("invalid input. Calculation must not contain 0+0");
-                                Console.WriteLine("Press any key to try again");
-                                Console.ReadKey();
-                                //Går tillbaka till case 1
-                                goto case "1";
-                            }
-                            else
-                            {
                                 //Kallar på uträkningsmetoden för addition
                                 string plusRes = PlusCalc(input);
                                 //Lägger till i listan
                                 results.Add($"{input} = {plusRes}");
                                 //Utskrift                                                       
                                 Console.WriteLine($"{input} = {plusRes}");
-                            }
-
-
                         }
 
                         else if (input.Contains("-"))
                         {
-
-                            if (input.Contains("0-0"))
-                            {
-                                Console.WriteLine("invalid input. Calculation must not contain 0-0");
-                                Console.WriteLine("Press any key to try again");
-                                Console.ReadKey();
-                                goto case "1";
-                            }
-                            else
-                            {
                                 string subRes = SubCalc(input);
 
                                 results.Add($"{input} = {subRes}");
 
                                 Console.WriteLine($"{input} = {subRes}");
-                            }
-
 
                         }
                         else if (input.Contains("*"))
                         {
-
-                            if (input.Contains("0*0"))
-                            {
-                                Console.WriteLine("invalid input. Calculation must not contain 0*0");
-                                Console.WriteLine("Press any key to try again");
-                                Console.ReadKey();
-                                goto case "1";
-                            }
-                            else
-                            {
                                 string multiRes = MultiCalc(input);
 
                                 results.Add($"{input} = {multiRes}");
 
                                 Console.WriteLine($"{input} = {multiRes}");
-                            }
-
-
                         }
                         else if (input.Contains("/"))
                         {
 
-                            if (input.Contains("0/0"))
+                            if (input.Contains("0/"))
                             {
-                                Console.WriteLine("invalid input. Calculation must not contain 0/0");
+                                Console.WriteLine("invalid input.");
                                 Console.WriteLine("Press any key to try again");
                                 Console.ReadKey();
                                 goto case "1";
@@ -271,7 +235,7 @@ namespace Calculator
                 for (int i = 0; i < welcome.Length; i++)
                 {
                     //Skriver ut en bokstav var 50 millisekund
-                    Thread.Sleep(50);
+                    Thread.Sleep(20);
                     Console.Write(welcome[i]);
                 }
             }
@@ -282,7 +246,7 @@ namespace Calculator
 
                 for (var i = 0; i < menu.Length; i++)
                 {
-                    Thread.Sleep(30);
+                    Thread.Sleep(20);
                     Console.Write(menu[i]);
                 }
             }
@@ -311,36 +275,39 @@ namespace Calculator
                 {
                     Console.WriteLine("Calculation must not contain any letters. Press any key to try again");
                     Console.ReadKey();
-                    
+                    return "error";
                 }
                 //Kontrollerar om input innehåller mellanslag
                 if (input.Contains(" "))
                 {
                     Console.WriteLine("No spaces allowed. Press any key to try again");
                     Console.ReadKey();
-                    
+                    return "error";
                 }
                 //Kontrollerar om input är tomt
                 if (input == "")
                 {
                     Console.WriteLine("No input. Press any key to try again");
                     Console.ReadKey();
-                    
+                    return "error";
                 }
                 //Kontrollerar om input innehåller specialtecken
-                string symbols = "!\"#¤%&/()=?`^'@£$€{[]}\\<>|-_^~§½";
+                string symbols = "!\"#¤%&()=?`^'@£$€{[]}\\<>|_^~§½";
                 //För varje tecken i stringen symbols kollar loopen om input innehåller någon av alla tecken
-                foreach(var item in symbols)
+                foreach (var item in symbols)
                 {
                     if (input.Contains(item))
                     {
+                        
                         Console.WriteLine("Input cannot contain special characters. Press any key to try again");
                         Console.ReadKey();
+                        return "error";
                     }
 
                 }
+                
                 //Returnerar felmeddelande
-                return "error";
+                return "null";
             }
         }
     }
